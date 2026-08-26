@@ -7,4 +7,5 @@ Fall 2026 repo for in class code
 * Git
 * GitHub
 * R
+* RStudio
 
