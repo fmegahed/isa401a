@@ -1596,12 +1596,36 @@ border-radius: 0px;
 
 <div id="crashes-per-day" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Crashes Per Day</h1>
+<div id="putting-the-data-in-rmarkdown" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> Putting the Data in
+RMarkdown</h2>
 <pre class="r"><code>crashes_per_day = 30125 / 365
-crashes_per_day</code></pre>
-<pre><code>## [1] 82.53425</code></pre>
+crashes_per_day
+
+crashes_by_day = c(2020, 2241, 2327, 2285,
+                   2380, 1866, 1664)
+names(crashes_by_day) = c(&quot;Mon&quot;, &quot;Tue&quot;, &quot;Wed&quot;, &quot;Thu&quot;,
+                          &quot;Fri&quot;, &quot;Sat&quot;, &quot;Sun&quot;)
+crashes_by_day</code></pre>
+<pre><code>## [1] 82.53425
+##  Mon  Tue  Wed  Thu  Fri  Sat  Sun 
+## 2020 2241 2327 2285 2380 1866 1664</code></pre>
+</div>
+<div id="type-of-crashes_per_day" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> Type of
+<code>crashes_per_day</code></h2>
+<pre class="r"><code>typeof(crashes_by_day)</code></pre>
+<pre><code>## [1] &quot;double&quot;</code></pre>
+<pre class="r"><code>crashes_by_day_int = c(2020L, 2241L, 2327L, 2285L,
+                   2380L, 1866L, 1664L)
+names(crashes_by_day_int) = c(&quot;Mon&quot;, &quot;Tue&quot;, &quot;Wed&quot;, &quot;Thu&quot;,
+                          &quot;Fri&quot;, &quot;Sat&quot;, &quot;Sun&quot;)
+crashes_by_day_int |&gt; typeof()</code></pre>
+<pre><code>## [1] &quot;integer&quot;</code></pre>
+</div>
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIjAzIC0gUiBCYXNpY3MiDQphdXRob3I6ICJGYWRlbCBNIE1lZ2FoZWQiDQpkYXRlOiAnYHIgU3lzLkRhdGUoKWAnDQpvdXRwdXQ6IA0KICBodG1sX2RvY3VtZW50Og0KICAgIHRvYzogVFJVRQ0KICAgIHRvY19mbG9hdDogVFJVRQ0KICAgIG51bWJlcl9zZWN0aW9uczogVFJVRQ0KICAgIGNvZGVfZm9sZGluZzogc2hvdw0KICAgIGNvZGVfZG93bmxvYWQ6IFRSVUUNCi0tLQ0KDQpgYGB7ciBzZXR1cCwgaW5jbHVkZT1GQUxTRX0NCmtuaXRyOjpvcHRzX2NodW5rJHNldChlY2hvID0gVFJVRSkNCmBgYA0KDQojIENyYXNoZXMgUGVyIERheQ0KDQpgYGB7ciBjaW5jeV9jcmFzaGVzfQ0KY3Jhc2hlc19wZXJfZGF5ID0gMzAxMjUgLyAzNjUNCmNyYXNoZXNfcGVyX2RheQ0KYGBgDQoNCg0KDQo=</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIjAzIC0gUiBCYXNpY3MiDQphdXRob3I6ICJGYWRlbCBNIE1lZ2FoZWQiDQpkYXRlOiAnYHIgU3lzLkRhdGUoKWAnDQpvdXRwdXQ6IA0KICBodG1sX2RvY3VtZW50Og0KICAgIHRvYzogVFJVRQ0KICAgIHRvY19mbG9hdDogVFJVRQ0KICAgIG51bWJlcl9zZWN0aW9uczogVFJVRQ0KICAgIGNvZGVfZm9sZGluZzogc2hvdw0KICAgIGNvZGVfZG93bmxvYWQ6IFRSVUUNCi0tLQ0KDQpgYGB7ciBzZXR1cCwgaW5jbHVkZT1GQUxTRX0NCmtuaXRyOjpvcHRzX2NodW5rJHNldChlY2hvID0gVFJVRSkNCmBgYA0KDQojIENyYXNoZXMgUGVyIERheQ0KDQoNCiMjIFB1dHRpbmcgdGhlIERhdGEgaW4gUk1hcmtkb3duDQpgYGB7ciBjaW5jeV9jcmFzaGVzLCByZXN1bHRzPSdob2xkJ30NCmNyYXNoZXNfcGVyX2RheSA9IDMwMTI1IC8gMzY1DQpjcmFzaGVzX3Blcl9kYXkNCg0KY3Jhc2hlc19ieV9kYXkgPSBjKDIwMjAsIDIyNDEsIDIzMjcsIDIyODUsDQogICAgICAgICAgICAgICAgICAgMjM4MCwgMTg2NiwgMTY2NCkNCm5hbWVzKGNyYXNoZXNfYnlfZGF5KSA9IGMoIk1vbiIsICJUdWUiLCAiV2VkIiwgIlRodSIsDQogICAgICAgICAgICAgICAgICAgICAgICAgICJGcmkiLCAiU2F0IiwgIlN1biIpDQpjcmFzaGVzX2J5X2RheQ0KYGBgDQoNCiMjIFR5cGUgb2YgYGNyYXNoZXNfcGVyX2RheWANCmBgYHtyfQ0KdHlwZW9mKGNyYXNoZXNfYnlfZGF5KQ0KDQpjcmFzaGVzX2J5X2RheV9pbnQgPSBjKDIwMjBMLCAyMjQxTCwgMjMyN0wsIDIyODVMLA0KICAgICAgICAgICAgICAgICAgIDIzODBMLCAxODY2TCwgMTY2NEwpDQpuYW1lcyhjcmFzaGVzX2J5X2RheV9pbnQpID0gYygiTW9uIiwgIlR1ZSIsICJXZWQiLCAiVGh1IiwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgIkZyaSIsICJTYXQiLCAiU3VuIikNCmNyYXNoZXNfYnlfZGF5X2ludCB8PiB0eXBlb2YoKQ0KYGBgDQoNCg==</div>
 
 
 </div>
