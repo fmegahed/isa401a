@@ -1,3 +1,5 @@
 /.Rproj.user
 .Rhistory
 .Renviron
+/apps/job_scout_chat/.shinychat
+apps/job_scout_chat/data/scout.db-shm
