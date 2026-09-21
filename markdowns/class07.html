@@ -11,7 +11,7 @@
 
 <meta name="author" content="Fadel M Megahed" />
 
-<meta name="date" content="2026-09-16" />
+<meta name="date" content="2026-09-21" />
 
 <title>Class 07</title>
 
@@ -1589,7 +1589,7 @@ border-radius: 0px;
 
 <h1 class="title toc-ignore">Class 07</h1>
 <h4 class="author">Fadel M Megahed</h4>
-<h4 class="date">2026-09-16</h4>
+<h4 class="date">2026-09-21</h4>
 
 </div>
 
@@ -1665,8 +1665,117 @@ jobs |&gt;
 ## 2 NC             fulltime       98        0.133
 ## 3 PA             fulltime       79        0.114</code></pre>
 </div>
+<div id="practice" class="section level2" number="2">
+<h2><span class="header-section-number">2</span> Practice</h2>
+<pre class="r"><code>con = DBI::dbConnect(RSQLite::SQLite(), &quot;../data/midwest_airbnb.db&quot;)
+listings = DBI::dbReadTable(con, &quot;listings&quot;) |&gt;
+  tibble::as_tibble()
+DBI::dbDisconnect(con)
+dplyr::glimpse(listings)</code></pre>
+<pre><code>## Rows: 14,887
+## Columns: 29
+## $ city                    &lt;chr&gt; &quot;Chicago&quot;, &quot;Chicago&quot;, &quot;Chicago&quot;, &quot;Chicago&quot;, &quot;C…
+## $ snapshot_date           &lt;chr&gt; &quot;2026-07-20&quot;, &quot;2026-07-20&quot;, &quot;2026-07-20&quot;, &quot;202…
+## $ id                      &lt;chr&gt; &quot;2384&quot;, &quot;7126&quot;, &quot;10945&quot;, &quot;12140&quot;, &quot;71930&quot;, &quot;94…
+## $ name                    &lt;chr&gt; &quot;Hyde Park: 5 minute walk to Obama Presidentia…
+## $ host_id                 &lt;chr&gt; &quot;2613&quot;, &quot;17928&quot;, &quot;33004&quot;, &quot;46734&quot;, &quot;334241&quot;, &quot;…
+## $ host_name               &lt;chr&gt; &quot;Rebecca&quot;, &quot;Sarah&quot;, &quot;Elizabeth&quot;, &quot;Shar And Rob…
+## $ host_since              &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ host_is_superhost       &lt;chr&gt; &quot;t&quot;, &quot;t&quot;, &quot;t&quot;, &quot;f&quot;, &quot;t&quot;, &quot;f&quot;, &quot;t&quot;, &quot;t&quot;, &quot;t&quot;, &quot;…
+## $ neighbourhood           &lt;chr&gt; &quot;Hyde Park&quot;, &quot;West Town&quot;, &quot;Lincoln Park&quot;, &quot;Lin…
+## $ latitude                &lt;dbl&gt; 41.78790, 41.90138, 41.91196, 41.92385, 41.896…
+## $ longitude               &lt;dbl&gt; -87.58780, -87.68153, -87.63981, -87.64910, -8…
+## $ property_type           &lt;chr&gt; &quot;Private room in condo&quot;, &quot;Entire rental unit&quot;,…
+## $ room_type               &lt;chr&gt; &quot;Private room&quot;, &quot;Entire home/apt&quot;, &quot;Entire hom…
+## $ accommodates            &lt;int&gt; 1, 2, 4, 3, 2, 1, 8, 10, 5, 2, 1, 2, 2, 2, 1, …
+## $ bedrooms                &lt;dbl&gt; NA, 1, 2, 1, NA, 1, 3, 4, 2, 1, 1, 2, NA, 2, 1…
+## $ beds                    &lt;dbl&gt; 1, 1, 2, 1, 1, 1, 3, 4, 3, 1, 1, 1, 1, NA, NA,…
+## $ bathrooms_text          &lt;chr&gt; &quot;1 shared bath&quot;, &quot;1 bath&quot;, &quot;1 bath&quot;, &quot;1 privat…
+## $ price                   &lt;dbl&gt; 171.33, 126.00, 278.50, 447.00, 131.00, 245.33…
+## $ minimum_nights          &lt;int&gt; 3, 2, 2, 2, 2, 2, 32, 32, 2, 32, 32, 32, 2, 18…
+## $ availability_365        &lt;int&gt; 306, 264, 271, 23, 218, 132, 360, 356, 290, 17…
+## $ number_of_reviews       &lt;int&gt; 268, 630, 155, 22, 161, 50, 77, 87, 750, 322, …
+## $ number_of_reviews_ltm   &lt;int&gt; 13, 46, 30, 4, 25, 14, 0, 0, 46, 2, 1, 3, 24, …
+## $ first_review            &lt;chr&gt; &quot;2015-01-09&quot;, &quot;2009-07-03&quot;, &quot;2014-04-28&quot;, &quot;201…
+## $ last_review             &lt;chr&gt; &quot;2026-06-08&quot;, &quot;2026-06-30&quot;, &quot;2026-06-21&quot;, &quot;202…
+## $ review_scores_rating    &lt;dbl&gt; 4.99, 4.74, 4.78, 4.95, 4.89, 4.90, 4.78, 4.78…
+## $ reviews_per_month       &lt;dbl&gt; 1.91, 3.04, 1.04, 0.16, 0.87, 1.03, 0.59, 0.64…
+## $ instant_bookable        &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ estimated_revenue_l365d &lt;dbl&gt; 13364, 32130, 50130, 10728, 19650, 20608, 0, 0…
+## $ amenities_count         &lt;int&gt; 47, 41, 49, 27, 43, 37, 35, 34, 77, 39, 36, 36…</code></pre>
+<pre class="r"><code># Q1: Approach (a) would be to simply count the repetitions within the city col
+table(listings$city)</code></pre>
+<pre><code>## 
+##     Chicago    Columbus Twin Cities 
+##        7439        2587        4861</code></pre>
+<pre class="r"><code># alternatively, group by &gt; summarize (n()) -- that returns a df
+# in (a) we returned a named vector
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkNsYXNzIDA3Ig0KYXV0aG9yOiAiRmFkZWwgTSBNZWdhaGVkIg0KZGF0ZTogImByIFN5cy5EYXRlKClgIg0Kb3V0cHV0OiANCiAgaHRtbF9kb2N1bWVudDoNCiAgICB0b2M6IFRSVUUNCiAgICB0b2NfZmxvYXQ6IFRSVUUNCiAgICBudW1iZXJfc2VjdGlvbnM6IFRSVUUNCiAgICBjb2RlX2Rvd25sb2FkOiBUUlVFDQogICAgY29kZV9mb2xkaW5nOiBzaG93DQotLS0NCg0KYGBge3Igc2V0dXAsIGluY2x1ZGU9RkFMU0V9DQprbml0cjo6b3B0c19jaHVuayRzZXQoZWNobyA9IFRSVUUpDQpgYGANCg0KIyMgRGVtbw0KDQpgYGB7ciBkZW1vfQ0KY29uID0gREJJOjpkYkNvbm5lY3QoUlNRTGl0ZTo6U1FMaXRlKCksICIuLi9kYXRhL3Njb3V0LmRiIikNCnBvc3RpbmdzID0gREJJOjpkYlJlYWRUYWJsZShjb24sICJzY291dF9wb3N0aW5ncyIpIA0KREJJOjpkYkRpc2Nvbm5lY3QoY29uKQ0KDQpqb2JzID0gcG9zdGluZ3MgfD4NCiAgZHBseXI6OnNlbGVjdCgNCiAgICBjb21wYW55LCB0aXRsZSwgbG9jYXRpb25fc3RhdGUsIHJlbW90ZSwgY2F0ZWdvcnksIHBvc3RlZF9hdCwgbGFzdF9zZWVuX2F0DQogICAgKSB8Pg0KICBkcGx5cjo6bXV0YXRlKGRwbHlyOjphY3Jvc3MoZHBseXI6OmVuZHNfd2l0aCgiX2F0IiksIGFzLkRhdGUpLA0KICAgICAgICAgICAgICAgIGRheXNfb3BlbiA9IGFzLm51bWVyaWMobGFzdF9zZWVuX2F0IC0gcG9zdGVkX2F0KSkNCg0KIyBGb3IgUTEsIHRvIGFuc3dlciBpdCwgd2UgbmVlZCB0aGUgZm9sbG93aW5nOg0KIyAtIG51bWJlciBvZiBqb2JzIHBlciBjYXRlZ29yeQ0KIyAtIGZyYWN0aW9uIG9mIHRob3NlIGpvYnMgdGhhdCBhcmUgcmVtb3RlIGZyaWVuZGx5DQoNCmpvYnMgfD4gDQogIGRwbHlyOjpncm91cF9ieShjYXRlZ29yeSkgfD4gDQogIGRwbHlyOjpzdW1tYXJpc2UoDQogICAgcG9zdGluZ3MgPSBkcGx5cjo6bigpLCAjIGNvdW50aW5nIHRoZSBudW1iZXIgb2Ygcm93cyBwZXIgY2F0ZWdvcnkNCiAgICByZW1vdGVfc2hhcmUgPSBtZWFuKHJlbW90ZSkgfD4gcm91bmQoMykNCiAgKQ0KDQojIFEyOiBBbW9uZyB0aGUgZnVsbHRpbWUgam9icywgd2hpY2ggc3RhdGVzIGhhdmUgdGhlIGhpZ2hlc3QgcmVtb3RlIHNoYXJlPw0Kam9icyB8PiANCiAgZHBseXI6OmZpbHRlcihjYXRlZ29yeSA9PSAnZnVsbHRpbWUnKSB8PiANCiAgZHBseXI6Omdyb3VwX2J5KGxvY2F0aW9uX3N0YXRlKSB8PiANCiAgICBkcGx5cjo6c3VtbWFyaXNlKA0KICAgIHBvc3RpbmdzID0gZHBseXI6Om4oKSwgIyBjb3VudGluZyB0aGUgbnVtYmVyIG9mIHJvd3MgcGVyIHN0YXRlDQogICAgcmVtb3RlX3NoYXJlID0gbWVhbihyZW1vdGUpIHw+IHJvdW5kKDMpDQogICkgfD4gDQogIGRwbHlyOjpmaWx0ZXIocG9zdGluZ3MgPj0gNTApIHw+ICMgdXAgdG8geW91IHRvIGRldGVybWluZSB0aGUgbWluIHRocmVzaG9sZA0KICBkcGx5cjo6YXJyYW5nZShkcGx5cjo6ZGVzYyhyZW1vdGVfc2hhcmUpKSB8PiANCiAgaGVhZCgzKQ0KDQojIGFsdGVybmF0aXZlbHkNCmpvYnMgfD4gDQogICMgZHBseXI6OmZpbHRlcihjYXRlZ29yeSA9PSAnZnVsbHRpbWUnKSB8PiANCiAgZHBseXI6Omdyb3VwX2J5KGxvY2F0aW9uX3N0YXRlLCBjYXRlZ29yeSkgfD4gDQogICAgZHBseXI6OnN1bW1hcmlzZSgNCiAgICBwb3N0aW5ncyA9IGRwbHlyOjpuKCksICMgY291bnRpbmcgdGhlIG51bWJlciBvZiByb3dzIHBlciBzdGF0ZQ0KICAgIHJlbW90ZV9zaGFyZSA9IG1lYW4ocmVtb3RlKSB8PiByb3VuZCgzKQ0KICApIHw+IA0KICBkcGx5cjo6ZmlsdGVyKHBvc3RpbmdzID49IDUwKSB8PiAjIHVwIHRvIHlvdSB0byBkZXRlcm1pbmUgdGhlIG1pbiB0aHJlc2hvbGQNCiAgZHBseXI6OmFycmFuZ2UoZHBseXI6OmRlc2MocmVtb3RlX3NoYXJlKSkgfD4gDQogIGhlYWQoMykNCiAgDQoNCg0KYGBgDQoNCg==</div>
+listings |&gt; 
+  dplyr::group_by(city) |&gt; 
+  dplyr::summarise(
+    city_count = dplyr::n()
+  ) -&gt; practice_q1
+
+practice_q1</code></pre>
+<pre><code>## # A tibble: 3 × 2
+##   city        city_count
+##   &lt;chr&gt;            &lt;int&gt;
+## 1 Chicago           7439
+## 2 Columbus          2587
+## 3 Twin Cities       4861</code></pre>
+<pre class="r"><code># Q2: For entire homes (room_type == &quot;Entire home/apt&quot;) that sleep four or more, what is the median price in each city?
+listings |&gt; 
+  dplyr::filter(
+    room_type == &quot;Entire home/apt&quot; &amp; accommodates &gt;= 4
+  ) |&gt; 
+  dplyr::group_by(city) |&gt; 
+  dplyr::summarise(
+    median_price = median(price)
+  )</code></pre>
+<pre><code>## # A tibble: 3 × 2
+##   city        median_price
+##   &lt;chr&gt;              &lt;dbl&gt;
+## 1 Chicago             312 
+## 2 Columbus            240.
+## 3 Twin Cities         311</code></pre>
+<pre class="r"><code># Q3: Add price_per_person = price / accommodates. Which three listings are cheapest per person? Believe them?
+# Note that this is per listing, and we need to create a new col
+
+listings |&gt; 
+  dplyr::mutate(
+    price_per_person = price / accommodates # LHS = new col name; RHS is the math used to create the new col [this is done row by row]
+  ) |&gt; 
+  dplyr::arrange(price_per_person) |&gt; 
+  # you do not need to do this step (next step); I am just doing it so we can look at the output in a more compact way (less cols)
+  dplyr::select(city, name, price, accommodates, price_per_person) |&gt; 
+  head(3) # tail would provide the bottom 3 (the most expensive 3 since we are sorting in an ascending order by price_person)</code></pre>
+<pre><code>## # A tibble: 3 × 5
+##   city        name                           price accommodates price_per_person
+##   &lt;chr&gt;       &lt;chr&gt;                          &lt;dbl&gt;        &lt;int&gt;            &lt;dbl&gt;
+## 1 Twin Cities Casa hermosa y tranquila        4.17            7            0.596
+## 2 Twin Cities Boho Modern Condo Retreat! Pe… 12.3             6            2.06 
+## 3 Chicago     Entire Two Bedroom Condo        9.57            4            2.39</code></pre>
+<pre class="r"><code>#  Q4: Which five host_names have the most listings?
+listings |&gt; 
+  dplyr::count(host_name,  sort = T) # short cut for group_by and then n()</code></pre>
+<pre><code>## # A tibble: 3,328 × 2
+##    host_name               n
+##    &lt;chr&gt;               &lt;int&gt;
+##  1 Evolve                158
+##  2 RoomPicks             145
+##  3 David                 129
+##  4 Luxury Bookings Fze   104
+##  5 Jessica               102
+##  6 Matt                   95
+##  7 Michael                93
+##  8 Minnestay              89
+##  9 John                   88
+## 10 ⁨Cloud9⁩                 88
+## # ℹ 3,318 more rows</code></pre>
+</div>
+
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkNsYXNzIDA3Ig0KYXV0aG9yOiAiRmFkZWwgTSBNZWdhaGVkIg0KZGF0ZTogImByIFN5cy5EYXRlKClgIg0Kb3V0cHV0OiANCiAgaHRtbF9kb2N1bWVudDoNCiAgICB0b2M6IFRSVUUNCiAgICB0b2NfZmxvYXQ6IFRSVUUNCiAgICBudW1iZXJfc2VjdGlvbnM6IFRSVUUNCiAgICBjb2RlX2Rvd25sb2FkOiBUUlVFDQogICAgY29kZV9mb2xkaW5nOiBzaG93DQotLS0NCg0KYGBge3Igc2V0dXAsIGluY2x1ZGU9RkFMU0V9DQprbml0cjo6b3B0c19jaHVuayRzZXQoZWNobyA9IFRSVUUpDQpgYGANCg0KIyMgRGVtbw0KDQpgYGB7ciBkZW1vfQ0KY29uID0gREJJOjpkYkNvbm5lY3QoUlNRTGl0ZTo6U1FMaXRlKCksICIuLi9kYXRhL3Njb3V0LmRiIikNCnBvc3RpbmdzID0gREJJOjpkYlJlYWRUYWJsZShjb24sICJzY291dF9wb3N0aW5ncyIpIA0KREJJOjpkYkRpc2Nvbm5lY3QoY29uKQ0KDQpqb2JzID0gcG9zdGluZ3MgfD4NCiAgZHBseXI6OnNlbGVjdCgNCiAgICBjb21wYW55LCB0aXRsZSwgbG9jYXRpb25fc3RhdGUsIHJlbW90ZSwgY2F0ZWdvcnksIHBvc3RlZF9hdCwgbGFzdF9zZWVuX2F0DQogICAgKSB8Pg0KICBkcGx5cjo6bXV0YXRlKGRwbHlyOjphY3Jvc3MoZHBseXI6OmVuZHNfd2l0aCgiX2F0IiksIGFzLkRhdGUpLA0KICAgICAgICAgICAgICAgIGRheXNfb3BlbiA9IGFzLm51bWVyaWMobGFzdF9zZWVuX2F0IC0gcG9zdGVkX2F0KSkNCg0KIyBGb3IgUTEsIHRvIGFuc3dlciBpdCwgd2UgbmVlZCB0aGUgZm9sbG93aW5nOg0KIyAtIG51bWJlciBvZiBqb2JzIHBlciBjYXRlZ29yeQ0KIyAtIGZyYWN0aW9uIG9mIHRob3NlIGpvYnMgdGhhdCBhcmUgcmVtb3RlIGZyaWVuZGx5DQoNCmpvYnMgfD4gDQogIGRwbHlyOjpncm91cF9ieShjYXRlZ29yeSkgfD4gDQogIGRwbHlyOjpzdW1tYXJpc2UoDQogICAgcG9zdGluZ3MgPSBkcGx5cjo6bigpLCAjIGNvdW50aW5nIHRoZSBudW1iZXIgb2Ygcm93cyBwZXIgY2F0ZWdvcnkNCiAgICByZW1vdGVfc2hhcmUgPSBtZWFuKHJlbW90ZSkgfD4gcm91bmQoMykNCiAgKQ0KDQojIFEyOiBBbW9uZyB0aGUgZnVsbHRpbWUgam9icywgd2hpY2ggc3RhdGVzIGhhdmUgdGhlIGhpZ2hlc3QgcmVtb3RlIHNoYXJlPw0Kam9icyB8PiANCiAgZHBseXI6OmZpbHRlcihjYXRlZ29yeSA9PSAnZnVsbHRpbWUnKSB8PiANCiAgZHBseXI6Omdyb3VwX2J5KGxvY2F0aW9uX3N0YXRlKSB8PiANCiAgICBkcGx5cjo6c3VtbWFyaXNlKA0KICAgIHBvc3RpbmdzID0gZHBseXI6Om4oKSwgIyBjb3VudGluZyB0aGUgbnVtYmVyIG9mIHJvd3MgcGVyIHN0YXRlDQogICAgcmVtb3RlX3NoYXJlID0gbWVhbihyZW1vdGUpIHw+IHJvdW5kKDMpDQogICkgfD4gDQogIGRwbHlyOjpmaWx0ZXIocG9zdGluZ3MgPj0gNTApIHw+ICMgdXAgdG8geW91IHRvIGRldGVybWluZSB0aGUgbWluIHRocmVzaG9sZA0KICBkcGx5cjo6YXJyYW5nZShkcGx5cjo6ZGVzYyhyZW1vdGVfc2hhcmUpKSB8PiANCiAgaGVhZCgzKQ0KDQojIGFsdGVybmF0aXZlbHkNCmpvYnMgfD4gDQogICMgZHBseXI6OmZpbHRlcihjYXRlZ29yeSA9PSAnZnVsbHRpbWUnKSB8PiANCiAgZHBseXI6Omdyb3VwX2J5KGxvY2F0aW9uX3N0YXRlLCBjYXRlZ29yeSkgfD4gDQogICAgZHBseXI6OnN1bW1hcmlzZSgNCiAgICBwb3N0aW5ncyA9IGRwbHlyOjpuKCksICMgY291bnRpbmcgdGhlIG51bWJlciBvZiByb3dzIHBlciBzdGF0ZQ0KICAgIHJlbW90ZV9zaGFyZSA9IG1lYW4ocmVtb3RlKSB8PiByb3VuZCgzKQ0KICApIHw+IA0KICBkcGx5cjo6ZmlsdGVyKHBvc3RpbmdzID49IDUwKSB8PiAjIHVwIHRvIHlvdSB0byBkZXRlcm1pbmUgdGhlIG1pbiB0aHJlc2hvbGQNCiAgZHBseXI6OmFycmFuZ2UoZHBseXI6OmRlc2MocmVtb3RlX3NoYXJlKSkgfD4gDQogIGhlYWQoMykNCmBgYA0KDQojIyBQcmFjdGljZQ0KDQpgYGB7ciBwcmFjdGljZV9leGFtcGxlfQ0KY29uID0gREJJOjpkYkNvbm5lY3QoUlNRTGl0ZTo6U1FMaXRlKCksICIuLi9kYXRhL21pZHdlc3RfYWlyYm5iLmRiIikNCmxpc3RpbmdzID0gREJJOjpkYlJlYWRUYWJsZShjb24sICJsaXN0aW5ncyIpIHw+DQogIHRpYmJsZTo6YXNfdGliYmxlKCkNCkRCSTo6ZGJEaXNjb25uZWN0KGNvbikNCmRwbHlyOjpnbGltcHNlKGxpc3RpbmdzKQ0KDQojIFExOiBBcHByb2FjaCAoYSkgd291bGQgYmUgdG8gc2ltcGx5IGNvdW50IHRoZSByZXBldGl0aW9ucyB3aXRoaW4gdGhlIGNpdHkgY29sDQp0YWJsZShsaXN0aW5ncyRjaXR5KQ0KDQojIGFsdGVybmF0aXZlbHksIGdyb3VwIGJ5ID4gc3VtbWFyaXplIChuKCkpIC0tIHRoYXQgcmV0dXJucyBhIGRmDQojIGluIChhKSB3ZSByZXR1cm5lZCBhIG5hbWVkIHZlY3Rvcg0KDQpsaXN0aW5ncyB8PiANCiAgZHBseXI6Omdyb3VwX2J5KGNpdHkpIHw+IA0KICBkcGx5cjo6c3VtbWFyaXNlKA0KICAgIGNpdHlfY291bnQgPSBkcGx5cjo6bigpDQogICkgLT4gcHJhY3RpY2VfcTENCg0KcHJhY3RpY2VfcTENCg0KDQojIFEyOiBGb3IgZW50aXJlIGhvbWVzIChyb29tX3R5cGUgPT0gIkVudGlyZSBob21lL2FwdCIpIHRoYXQgc2xlZXAgZm91ciBvciBtb3JlLCB3aGF0IGlzIHRoZSBtZWRpYW4gcHJpY2UgaW4gZWFjaCBjaXR5Pw0KbGlzdGluZ3MgfD4gDQogIGRwbHlyOjpmaWx0ZXIoDQogICAgcm9vbV90eXBlID09ICJFbnRpcmUgaG9tZS9hcHQiICYgYWNjb21tb2RhdGVzID49IDQNCiAgKSB8PiANCiAgZHBseXI6Omdyb3VwX2J5KGNpdHkpIHw+IA0KICBkcGx5cjo6c3VtbWFyaXNlKA0KICAgIG1lZGlhbl9wcmljZSA9IG1lZGlhbihwcmljZSkNCiAgKQ0KDQojIFEzOiBBZGQgcHJpY2VfcGVyX3BlcnNvbiA9IHByaWNlIC8gYWNjb21tb2RhdGVzLiBXaGljaCB0aHJlZSBsaXN0aW5ncyBhcmUgY2hlYXBlc3QgcGVyIHBlcnNvbj8gQmVsaWV2ZSB0aGVtPw0KIyBOb3RlIHRoYXQgdGhpcyBpcyBwZXIgbGlzdGluZywgYW5kIHdlIG5lZWQgdG8gY3JlYXRlIGEgbmV3IGNvbA0KDQpsaXN0aW5ncyB8PiANCiAgZHBseXI6Om11dGF0ZSgNCiAgICBwcmljZV9wZXJfcGVyc29uID0gcHJpY2UgLyBhY2NvbW1vZGF0ZXMgIyBMSFMgPSBuZXcgY29sIG5hbWU7IFJIUyBpcyB0aGUgbWF0aCB1c2VkIHRvIGNyZWF0ZSB0aGUgbmV3IGNvbCBbdGhpcyBpcyBkb25lIHJvdyBieSByb3ddDQogICkgfD4gDQogIGRwbHlyOjphcnJhbmdlKHByaWNlX3Blcl9wZXJzb24pIHw+IA0KICAjIHlvdSBkbyBub3QgbmVlZCB0byBkbyB0aGlzIHN0ZXAgKG5leHQgc3RlcCk7IEkgYW0ganVzdCBkb2luZyBpdCBzbyB3ZSBjYW4gbG9vayBhdCB0aGUgb3V0cHV0IGluIGEgbW9yZSBjb21wYWN0IHdheSAobGVzcyBjb2xzKQ0KICBkcGx5cjo6c2VsZWN0KGNpdHksIG5hbWUsIHByaWNlLCBhY2NvbW1vZGF0ZXMsIHByaWNlX3Blcl9wZXJzb24pIHw+IA0KICBoZWFkKDMpICMgdGFpbCB3b3VsZCBwcm92aWRlIHRoZSBib3R0b20gMyAodGhlIG1vc3QgZXhwZW5zaXZlIDMgc2luY2Ugd2UgYXJlIHNvcnRpbmcgaW4gYW4gYXNjZW5kaW5nIG9yZGVyIGJ5IHByaWNlX3BlcnNvbikNCg0KIyAgUTQ6IFdoaWNoIGZpdmUgaG9zdF9uYW1lcyBoYXZlIHRoZSBtb3N0IGxpc3RpbmdzPw0KbGlzdGluZ3MgfD4gDQogIGRwbHlyOjpjb3VudChob3N0X25hbWUsICBzb3J0ID0gVCkgIyBzaG9ydCBjdXQgZm9yIGdyb3VwX2J5IGFuZCB0aGVuIG4oKQ0KDQpgYGANCg0KDQoNCg0KDQoNCg0K</div>
 
 
 </div>
